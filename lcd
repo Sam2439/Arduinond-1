@@ -1,0 +1,61 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include <Servo.h>
+#include <ESP8266WiFi.h>
+#include <WiFiClient.h>
+#include <ESP8266WebServer.h>
+
+// Define LCD Display
+LiquidCrystal_I2C lcd(0x27, 16, 2); // I2C address 0x27, 16 columns and 2 rows
+
+// Define Servo
+Servo doorServo;
+const int servoPin = D9;
+
+// Define Relay
+const int relayPin = D3;
+
+// Define WiFi
+const char *ssid = "YourSSID";
+const char *password = "YourPassword";
+ESP8266WebServer server(80);
+
+void setup() {
+  Serial.begin(9600);
+  lcd.begin(16, 2);
+  lcd.clear();
+  lcd.print("Initializing...");
+
+  doorServo.attach(servoPin);
+  pinMode(relayPin, OUTPUT);
+
+  connectToWiFi();
+  setupWebServer();
+}
+
+void loop() {
+  server.handleClient();
+  // Add any additional logic for NodeMCU 1 here
+}
+
+void connectToWiFi() {
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+  Serial.println("Connected to WiFi");
+}
+
+void setupWebServer() {
+  server.on("/", HTTP_GET, handleRoot);
+  server.begin();
+  Serial.println("HTTP server started");
+}
+
+void handleRoot() {
+  String content = "<html><body>";
+  content += "<h1>Welcome to NodeMCU 1</h1>";
+  content += "</body></html>";
+  server.send(200, "text/html", content);
+}

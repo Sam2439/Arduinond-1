@@ -1,0 +1,25 @@
+NodeMCU (ESP8266)   ->   Components
+-------------------------------------
+D9 (GPIO 3)          ->   Servo Control Pin
+D3 (GPIO 0)          ->   Relay Control Pin
+D7 (GPIO 13)         ->   LCD SDA (I2C)
+D8 (GPIO 15)         ->   LCD SCL (I2C)
+A0                   ->   LDR (Analog)
+D2 (GPIO 4)          ->   PIR Motion Sensor
+D1 (GPIO 5)          ->   RFID SS_PIN (SDA)
+D6 (GPIO 12)         ->   RFID RST_PIN
+D5 (GPIO 14)         ->   RFID SCK
+D7 (GPIO 13)         ->   RFID MOSI
+D6 (GPIO 12)         ->   RFID MISO
+D1 (GPIO 5)          ->   RFID NSS/SS
+D5 (GPIO 14)         ->   Ultrasonic Trigger Pin
+D4 (GPIO 2)          ->   Ultrasonic Echo Pin
+A1                   ->   Alcohol Sensor (Analog)
+A2                   ->   LPG Sensor (Analog)
+D0 (GPIO 16)         ->   8x8 LED Matrix (CS)
+D5 (GPIO 14)         ->   8x8 LED Matrix (DIN)
+D6 (GPIO 12)         ->   8x8 LED Matrix (CLK)
+D4 (GPIO 2)          ->   Nokia Display DIN
+D5 (GPIO 14)         ->   Nokia Display CLK
+D4 (GPIO 2)          ->   Nokia Display D/C
+D0 (GPIO 16)         ->   Nokia Display CS

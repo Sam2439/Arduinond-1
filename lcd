@@ -4,6 +4,8 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_PCD8544.h>
 
 // Define LCD Display
 LiquidCrystal_I2C lcd(0x27, 16, 2); // I2C address 0x27, 16 columns and 2 rows
@@ -14,6 +16,17 @@ const int servoPin = D9;
 
 // Define Relay
 const int relayPin = D3;
+
+// Define Nokia 5110 Display
+#define RST_PIN   D4
+#define CE_PIN    D0
+#define DC_PIN    D2
+#define DIN_PIN   D6
+#define CLK_PIN   D5
+Adafruit_PCD8544 display = Adafruit_PCD8544(DIN_PIN, CLK_PIN, DC_PIN, CE_PIN, RST_PIN);
+
+// Define Analog Sensor
+const int analogSensorPin = A3;
 
 // Define WiFi
 const char *ssid = "YourSSID";
@@ -29,12 +42,29 @@ void setup() {
   doorServo.attach(servoPin);
   pinMode(relayPin, OUTPUT);
 
+  display.begin();
+  display.setContrast(60); // Adjust contrast if needed
+
   connectToWiFi();
   setupWebServer();
 }
 
 void loop() {
   server.handleClient();
+  
+  // Read value from analog sensor
+  int analogSensorValue = analogRead(analogSensorPin);
+
+  // Display sensor value on Nokia 5110 display
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(BLACK);
+  display.setCursor(0, 0);
+  display.print("Analog Sensor:");
+  display.setCursor(0, 10);
+  display.print(analogSensorValue);
+  display.display();
+  
   // Add any additional logic for NodeMCU 1 here
 }
 
